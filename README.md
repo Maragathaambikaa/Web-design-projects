@@ -1,1 +1,1 @@
-I have used html and Css in this project  
+I have used HTML and CSS in this project.CSS is used to enhance the style and look of web page . CSS implemented in HTML code as follows - inline , internal, and external CSS. I have used Internal CSS  
