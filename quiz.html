@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://via.placeholder.com/1500'); /* Replace with your image URL */
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .quiz-container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h2>Simple Quiz</h2>
+    <p id="question"></p>
+    <div id="options" class="options"></div>
+    <button id="submitBtn">Submit</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: 'What is the capital of France?',
+        options: ['London', 'Paris', 'Berlin', 'Madrid'],
+        answer: 'Paris'
+      },
+      {
+        question: 'Which is the largest planet in our solar system?',
+        options: ['Jupiter', 'Saturn', 'Mars', 'Earth'],
+        answer: 'Jupiter'
+      },
+      {
+        question: 'What is 7 multiplied by 3?',
+        options: ['21', '24', '25', '27'],
+        answer: '21'
+      }
+    ];
+
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const submitButton = document.getElementById('submitBtn');
+    const resultElement = document.getElementById('result');
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const currentQuizData = quizData[currentQuestion];
+      questionElement.innerText = currentQuizData.question;
+      optionsElement.innerHTML = '';
+      
+      currentQuizData.options.forEach((option) => {
+        const button = document.createElement('button');
+        button.innerText = option;
+        button.classList.add('option-btn');
+        button.addEventListener('click', () => checkAnswer(option));
+        optionsElement.appendChild(button);
+      });
+    }
+
+    function checkAnswer(answer) {
+      const currentQuizData = quizData[currentQuestion];
+
+      if (answer === currentQuizData.answer) {
+        score++;
+      }
+
+      currentQuestion++;
+
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      questionElement.style.display = 'none';
+      optionsElement.style.display = 'none';
+      submitButton.style.display = 'none';
+
+      const percentage = (score / quizData.length) * 100;
+      resultElement.innerText = `You scored ${percentage}%`;
+    }
+
+    submitButton.addEventListener('click', loadQuestion);
+
+    loadQuestion();
+  </script>
+</body>
+</html>
